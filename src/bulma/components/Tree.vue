@@ -12,10 +12,10 @@
                     v-model="state.query"
                     :placeholder="i18n('Filter')"
                     @keyup.esc="state.query = ''">
-                <span class="icon is-left">
-                    <fa icon="search"/>
+                <span class="icon is-left has-text-muted">
+                    <fa :icon="faSearch"/>
                 </span>
-                <span class="icon is-right">
+                <span class="icon is-right has-text-muted is-clickable">
                     <a class="delete is-small"
                         @click="state.query = ''"
                         v-if="state.query"/>
@@ -31,7 +31,7 @@
                     @input="errors.empty()"
                     @keyup.enter="save"
                     @keyup.esc="state.item.name = ''">
-                <span class="icon is-right">
+                <span class="icon is-right has-text-muted is-clickable">
                     <a class="delete is-small"
                         @click="state.item.name = ''"
                         v-if="state.item.name"/>
@@ -50,7 +50,7 @@
                             {{ i18n('Add') }}
                         </span>
                         <span class="icon">
-                            <fa icon="plus"/>
+                            <fa :icon="faPlus"/>
                         </span>
                     </a>
                 </div>
@@ -62,7 +62,7 @@
                                 {{ i18n('Cancel') }}
                             </span>
                             <span class="icon">
-                                <fa icon="ban"/>
+                                <fa :icon="faBan"/>
                             </span>
                         </a>
                     </div>
@@ -75,7 +75,7 @@
                                 {{ i18n('Save') }}
                             </span>
                             <span class="icon">
-                                <fa icon="database"/>
+                                <fa :icon="faDatabase"/>
                             </span>
                         </a>
                     </div>
@@ -110,14 +110,11 @@
 import Loader from '@enso-ui/loader/bulma';
 import Errors from '@enso-ui/laravel-validation';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faSearch, faPlus, faBan, faDatabase,
 } from '@fortawesome/free-solid-svg-icons';
 import { focus } from '@enso-ui/directives';
 import Items from './Items.vue';
-
-library.add(faSearch, faPlus, faBan, faDatabase);
 
 export default {
     name: 'Tree',
@@ -168,6 +165,10 @@ export default {
     data: v => ({
         cache: null,
         errors: new Errors(),
+        faBan,
+        faDatabase,
+        faPlus,
+        faSearch,
         items: null,
         loaded: false,
         state: {
@@ -437,9 +438,73 @@ export default {
 </script>
 
 <style lang="scss">
+.item-tree {
+    .filter .input {
+        background-color: var(--enso-filter-control-surface);
+        color: var(--bulma-input-color);
+
+        &::placeholder {
+            color: var(--bulma-text-light);
+        }
+    }
+}
+</style>
+
+<style lang="scss">
     .item-tree {
-        .filter .name {
-            flex-grow: 1;
+        .title {
+            color: var(--bulma-text-strong);
+        }
+
+        .filter {
+            gap: 0.75rem;
+
+            .name {
+                flex-grow: 1;
+            }
+
+            .delete {
+                background-color: color-mix(
+                    in srgb,
+                    var(--bulma-scheme-main-ter) 78%,
+                    transparent
+                );
+
+                &::before,
+                &::after {
+                    background-color: var(--bulma-text-strong);
+                }
+            }
+
+            .button {
+                background-color: color-mix(
+                    in srgb,
+                    var(--bulma-scheme-main-ter) 76%,
+                    transparent
+                );
+                border-color: var(--bulma-border);
+                box-shadow: none;
+                color: var(--bulma-text-strong);
+
+                &:hover,
+                &:focus {
+                    background-color: color-mix(
+                        in srgb,
+                        var(--bulma-scheme-main-ter) 60%,
+                        var(--bulma-primary) 14%
+                    );
+                    border-color: color-mix(
+                        in srgb,
+                        var(--bulma-primary) 45%,
+                        var(--bulma-border)
+                    );
+                    color: var(--bulma-text-strong);
+                }
+
+                &.is-loading::after {
+                    border-color: transparent transparent var(--bulma-text-strong) var(--bulma-text-strong) !important;
+                }
+            }
         }
 
         .items {

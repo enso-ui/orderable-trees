@@ -1,17 +1,17 @@
 <template>
     <li>
         <a class="item dropdown-item"
-            :class="{ 'is-bold has-background-warning-light': item.selected }"
+            :class="{ 'is-bold item-selected': item.selected }"
             @click="select">
             <div class="level">
                 <div class="level-left">
-                    <div class="level-item is-marginless"
+                    <div class="level-item m-0"
                         v-if="hasChildren">
                         <span class="icon is-small"
                             @click.stop="toggle">
-                            <fa icon="minus-square"
+                            <fa :icon="faSquareMinus"
                                 v-if="isExpanded"/>
-                            <fa icon="plus-square"
+                            <fa :icon="faSquarePlus"
                                 v-else/>
                         </span>
                     </div>
@@ -24,7 +24,7 @@
                             <span class="icon has-text-info"
                                 v-if="item.description"
                                 v-tooltip="i18n(item.description)">
-                            <fa icon="question-circle"/>
+                            <fa :icon="faCircleQuestion"/>
                         </span>
                         </slot>
                     </div>
@@ -38,13 +38,13 @@
                             <a class="button is-naked is-small"
                                 @click.stop="edit">
                                 <span class="icon">
-                                    <fa icon="pencil-alt"/>
+                                    <fa :icon="faPen"/>
                                 </span>
                             </a>
                             <confirmation @confirm="destroy">
                                 <a class="is-naked mr-2">
                                     <span class="icon">
-                                        <fa icon="trash-alt"/>
+                                        <fa :icon="faTrashCan"/>
                                     </span>
                                 </a>
                             </confirmation>
@@ -78,13 +78,10 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-    faMinusSquare, faPlusSquare, faPencilAlt, faTrashAlt, faQuestionCircle,
+    faCircleQuestion, faPen, faSquareMinus, faSquarePlus, faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
 import Confirmation from '@enso-ui/confirmation/bulma';
-
-library.add(faMinusSquare, faPlusSquare, faPencilAlt, faTrashAlt, faQuestionCircle);
 
 export default {
     name: 'Item',
@@ -107,6 +104,14 @@ export default {
     },
 
     emits: ['deselected', 'moved', 'selected', 'update:modelValue'],
+
+    data: () => ({
+        faCircleQuestion,
+        faPen,
+        faSquareMinus,
+        faSquarePlus,
+        faTrashCan,
+    }),
 
     computed: {
         canHaveChildren() {
@@ -193,5 +198,29 @@ export default {
 <style lang="scss">
     a.item.dropdown-item {
         padding: 0.5em 0.7em;
+
+        &.item-selected {
+            background-color: color-mix(
+                in srgb,
+                var(--bulma-scheme-main-bis) 88%,
+                var(--bulma-primary) 12%
+            ) !important;
+            border-radius: var(--bulma-radius);
+            color: var(--bulma-text-strong);
+        }
+
+        &:hover {
+            background-color: color-mix(
+                in srgb,
+                var(--bulma-scheme-main-bis) 92%,
+                var(--bulma-border)
+            );
+        }
+
+        .button.is-naked,
+        .is-naked,
+        .delete {
+            color: inherit;
+        }
     }
 </style>
