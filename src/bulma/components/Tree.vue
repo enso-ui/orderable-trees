@@ -12,10 +12,10 @@
                     v-model="state.query"
                     :placeholder="i18n('Filter')"
                     @keyup.esc="state.query = ''">
-                <span class="icon is-left has-text-muted">
+                <span class="icon is-left">
                     <fa :icon="faSearch"/>
                 </span>
-                <span class="icon is-right has-text-muted is-clickable">
+                <span class="icon is-right is-clickable">
                     <a class="delete is-small"
                         @click="state.query = ''"
                         v-if="state.query"/>
@@ -31,7 +31,7 @@
                     @input="errors.empty()"
                     @keyup.enter="save"
                     @keyup.esc="state.item.name = ''">
-                <span class="icon is-right has-text-muted is-clickable">
+                <span class="icon is-right is-clickable">
                     <a class="delete is-small"
                         @click="state.item.name = ''"
                         v-if="state.item.name"/>
