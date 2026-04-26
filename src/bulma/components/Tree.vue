@@ -438,24 +438,7 @@ export default {
 </script>
 
 <style lang="scss">
-.item-tree {
-    .filter .input {
-        background-color: var(--enso-filter-control-surface);
-        color: var(--bulma-input-color);
-
-        &::placeholder {
-            color: var(--bulma-text-light);
-        }
-    }
-}
-</style>
-
-<style lang="scss">
     .item-tree {
-        .title {
-            color: var(--bulma-text-strong);
-        }
-
         .filter {
             gap: 0.75rem;
 
@@ -473,36 +456,6 @@ export default {
                 &::before,
                 &::after {
                     background-color: var(--bulma-text-strong);
-                }
-            }
-
-            .button {
-                background-color: color-mix(
-                    in srgb,
-                    var(--bulma-scheme-main-ter) 76%,
-                    transparent
-                );
-                border-color: var(--bulma-border);
-                box-shadow: none;
-                color: var(--bulma-text-strong);
-
-                &:hover,
-                &:focus {
-                    background-color: color-mix(
-                        in srgb,
-                        var(--bulma-scheme-main-ter) 60%,
-                        var(--bulma-primary) 14%
-                    );
-                    border-color: color-mix(
-                        in srgb,
-                        var(--bulma-primary) 45%,
-                        var(--bulma-border)
-                    );
-                    color: var(--bulma-text-strong);
-                }
-
-                &.is-loading::after {
-                    border-color: transparent transparent var(--bulma-text-strong) var(--bulma-text-strong) !important;
                 }
             }
         }
