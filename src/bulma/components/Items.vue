@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Draggable from 'vuedraggable';
+import Draggable from 'vuedraggable/src/vuedraggable';
 import Item from './Item.vue';
 
 export default {
